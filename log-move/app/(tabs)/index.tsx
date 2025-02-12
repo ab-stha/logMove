@@ -1,74 +1,159 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import React from 'react';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
+
+  const router = useRouter();
+  const navigateToNewLogScreen = () => {
+    router.push('/(tabs)/new-log');
+  };
+
+  const navigateToViewLogsScreen = () => {
+    router.push('/(tabs)/view-logs');
+  };
+
+  const navigateToSettings = () => {
+    router.push('/(tabs)/settings');
+  }
+  
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style = {styles.container}>
+
+      <View style = {styles.titleContainer}>
+        <Text style = {styles.titleText}>Log{'\n' }Move</Text>
+        <View style = {styles.logoContainer}>
+          <Image>
+            {/* image in progress */}
+          </Image>
+        </View>
+      </View>
+
+      <View style = {{flexDirection: 'row', padding: 0, margin: 0}}>
+        <View>
+          <View style = {styles.dateContainer}>
+            <Text style = {{color: 'black', fontSize: 24, fontWeight: 900}}>
+              Monday
+            </Text>
+            <Text style = {{color: 'black', fontSize: 17, fontWeight: 600, marginTop: 9}}>
+              10/02/25
+            </Text>
+          </View>
+          <View style = {styles.calendarContainer}>
+              {/* calendar in progress */}
+          </View>
+        </View>
+
+        <TouchableOpacity style = {styles.aiButton}>
+          {/* AI button in progress */}
+          <Text style = {{fontSize: 22, color: '#f5f5f5', textAlign: 'center'}}>Ask{'\n'}LogMove{'\n'}AI</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style = {styles.navButtonsContainer}>
+        <TouchableOpacity style = {styles.navButton} onPress = {navigateToNewLogScreen}>
+            <Text style = {{color: '#f5f5f5', fontSize: 26}}>
+              New log
+            </Text>
+            <Text style = {{color: '#f8e4cd', fontSize: 17}}>
+              Log a new workout
+            </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style = {styles.navButton} onPress = {navigateToViewLogsScreen}>
+            <Text style = {{color: '#f5f5f5', fontSize: 26}}>
+              View logs
+            </Text>
+            <Text style = {{color: '#f8e4cd', fontSize: 17}}>
+              View your past workouts
+            </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style = {styles.navButton} onPress = {navigateToSettings}>
+            <Text style = {{color: '#f5f5f5', fontSize: 26}}>
+              Settings
+            </Text>
+            <Text style = {{color: '#f8e4cd', fontSize: 17}}>
+              Change your settings
+            </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#dfc6e7',
+    alignItems: 'center',
+    padding: 12,
+    paddingTop: 25,
+    width: '100%',
+    height: '100%',
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    backgroundColor: '#f1cb8d',
+    marginBottom: 40,
+    padding: 15,
+    borderRadius: 80,
+    borderWidth: 7,
+    borderColor: 'black',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  titleText: {
+    fontSize: 58,
+    fontWeight: 500,
+    color: '#f5f5f5',
+    marginRight: 10,
+
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  logoContainer: {
+    height: '60%',
+    width: 67,
+    backgroundColor: 'red',
   },
+
+  dateContainer: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    marginBottom: 10,
+    // backgroundColor: 'blue',
+
+  },
+  calendarContainer: {
+    backgroundColor: '#f5f5f5',
+    width: '83%',
+    height: 90,
+    alignSelf: 'flex-start',
+    borderRadius: 40,
+    borderWidth: 4,
+  },
+
+  aiButton: {
+    backgroundColor: 'grey',
+    width: '35%',
+    height: 'auto',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  navButtonsContainer: {
+    width: '100%',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  navButton: {
+    backgroundColor: 'black',
+    padding: 15,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+
 });
