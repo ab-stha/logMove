@@ -1,5 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import * as FileSystem from 'expo-file-system';
+import { useState } from 'react';
 
 
 
@@ -8,13 +9,13 @@ export default function NewLogScreen() {
   // define the uri of the file stored in the local storage
   const filePath = FileSystem.documentDirectory + 'workouts.json';
 
-  let testLog = 'test log 1';
+  // let testLog = 'test log 3';
+  const [inputValue, setInputValue] = useState('');
 
   const handleNewLog = async function () {
-    const newLog = await FileSystem.writeAsStringAsync(filePath, testLog);
-
+    setInputValue(inputValue);
+    const newLog = await FileSystem.writeAsStringAsync(filePath, inputValue);
     const displayLog = await FileSystem.readAsStringAsync(filePath);
-
     console.log('Your new log is: ', displayLog);
   };
 
@@ -30,12 +31,13 @@ export default function NewLogScreen() {
 
       <View style = {styles.navButtonsContainer}>
         <TouchableOpacity style = {styles.navButton} onPress = {handleNewLog}>
-            <Text style = {{color: '#f5f5f5', fontSize: 26}}>
-              New log
-            </Text>
-            <Text style = {{color: '#f8e4cd', fontSize: 17}}>
-              Log a new workout
-            </Text>
+          <TextInput style={styles.input} placeholder='Name your workout' onChangeText={setInputValue} value = {inputValue} />
+          <Text style = {{color: '#f5f5f5', fontSize: 26}}>
+            New log
+          </Text>
+          <Text style = {{color: '#f8e4cd', fontSize: 17}}>
+            Log a new workout
+          </Text>
         </TouchableOpacity>
 
       </View>
@@ -85,5 +87,15 @@ const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
     marginBottom: 20
+  },
+  input: {
+    backgroundColor: 'white',
+    height: 40,
+    borderWidth: 1,
+    padding: 8,
+    borderRadius: 17,
+    width: 200,
+    textAlign: 'center',
+    marginBottom: 14
   }
 });
